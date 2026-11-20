@@ -31,27 +31,35 @@ jobs:
           mkdir -p package/Payload
           cp -R build/Build/Products/Release-iphoneos/PhoenixJB.app package/Payload/
           cd package
-          zip -qry ../PhoenixJB-unsigned.ipa Payload
+          zip -qry ../PhoenixJB-1.0-unsigned.ipa Payload
 
       - name: Upload workflow artifact
         uses: actions/upload-artifact@v4
         with:
-          name: PhoenixJB-unsigned-IPA
-          path: PhoenixJB-unsigned.ipa
+          name: PhoenixJB-1.0-unsigned-IPA
+          path: PhoenixJB-1.0-unsigned.ipa
           if-no-files-found: error
           retention-days: 30
 
-      - name: Attach IPA to GitHub Release
-        if: startsWith(github.ref, 'refs/tags/')
+      - name: Publish Phoenix JB 1.0 to Releases
+        if: github.event_name == 'workflow_dispatch' || github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ github.ref_name }}
-          name: Phoenix JB ${{ github.ref_name }}
+          tag_name: ${{ startsWith(github.ref, 'refs/tags/') && github.ref_name || 'v1.0' }}
+          target_commitish: ${{ github.sha }}
+          name: Phoenix JB 1.0
           body: |
-            Phoenix JB 1.0
+            # Phoenix JB 1.0
 
-            SwiftUI IPA manager preview.
+            Initial public preview release of the Phoenix JB iOS interface.
 
-            **Important:** this release is not a jailbreak. It does not include an exploit, bootstrap, Sileo/Zebra installer, or an unsigned-app runtime. The IPA is unsigned and requires a supported signing/installation method.
-          files: PhoenixJB-unsigned.ipa
+            ## Included
+            - SwiftUI dark interface
+            - device and iOS version display
+            - Sileo / Zebra preference selector
+            - local repository/source list
+
+            ## Important
+            This is an unsigned IPA preview, **not a jailbreak**. It does not contain an exploit, bootstrap, Sileo/Zebra installer, package installation backend, or a LiveContainer-compatible unsigned app runtime. Repository URLs are stored locally only.
+          files: PhoenixJB-1.0-unsigned.ipa
           fail_on_unmatched_files: true
