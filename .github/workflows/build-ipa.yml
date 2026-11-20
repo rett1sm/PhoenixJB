@@ -1,0 +1,35 @@
+name: Build Phoenix JB IPA
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: macos-26
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Build app
+        run: |
+          xcodebuild \
+            -project PhoenixJB.xcodeproj \
+            -scheme PhoenixJB \
+            -configuration Release \
+            -sdk iphoneos \
+            -derivedDataPath build \
+            CODE_SIGNING_ALLOWED=NO \
+            build
+
+          mkdir -p package/Payload
+          cp -R build/Build/Products/Release-iphoneos/PhoenixJB.app package/Payload/
+          cd package
+          zip -qry ../PhoenixJB-unsigned.ipa Payload
+
+      - name: Upload IPA
+        uses: actions/upload-artifact@v4
+        with:
+          name: PhoenixJB-unsigned-IPA
+          path: PhoenixJB-unsigned.ipa
