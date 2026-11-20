@@ -19,7 +19,7 @@ jobs:
       - name: Получение исходного кода
         uses: actions/checkout@v4
 
-      - name: Сборка бета-версии 0.00
+      - name: Сборка приложения
         run: |
           xcodebuild \
             -project PhoenixJB.xcodeproj \
@@ -43,42 +43,42 @@ jobs:
           if-no-files-found: error
           retention-days: 30
 
-      - name: Перевод предыдущего выпуска в архив
+      - name: Пометить прежний выпуск как архивный
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           if gh release view v1.0 >/dev/null 2>&1; then
             gh release edit v1.0 \
-              --title "Архивная сборка — заменена бетой 0.00" \
-              --notes "Этот выпуск устарел и оставлен только для истории. Используй Phoenix JB 0.00 Beta: https://github.com/rett1sm/PhoenixJB/releases/tag/v0.00-beta" \
+              --title "Архив · Phoenix JB 1.0" \
+              --notes "Предыдущая тестовая сборка. Актуальная версия: https://github.com/rett1sm/PhoenixJB/releases/tag/v0.00-beta" \
               --prerelease
           fi
 
-      - name: Публикация бета-релиза 0.00
+      - name: Публикация бета-релиза
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v0.00-beta
           target_commitish: ${{ github.sha }}
-          name: Phoenix JB 0.00 — бета
+          name: Phoenix JB 0.00 · Beta
           prerelease: true
           make_latest: false
           body: |
-            # Phoenix JB 0.00 — бета
+            # Phoenix JB 0.00 · Beta
 
-            Это тестовая сборка Phoenix JB. Возможны ошибки, неполная функциональность и изменения без сохранения совместимости.
+            Первая открытая тестовая сборка Phoenix JB.
 
-            ## В этой бете
-            - тёмный интерфейс на SwiftUI;
-            - отображение модели устройства и версии iOS;
-            - выбор предпочтительного менеджера пакетов: Sileo или Zebra;
-            - локальный список источников и репозиториев.
+            ## Внутри
+            - обновлённый тёмный интерфейс;
+            - обзор устройства и состояния среды;
+            - выбор Sileo или Zebra;
+            - локальная библиотека IPA;
+            - импорт IPA из приложения «Файлы»;
+            - загрузка IPA по прямой ссылке;
+            - добавление и хранение адресов репозиториев.
 
-            ## Что пока не работает
-            - настоящий jailbreak и запуск эксплойта;
-            - установка Sileo, Zebra и DEB-пакетов;
-            - загрузка индексов репозиториев;
-            - запуск неподписанных IPA внутри Phoenix по модели LiveContainer.
+            ## Ограничения беты
+            Phoenix пока не является джейлбрейком. Эксплойт, bootstrap, установка Sileo/Zebra и DEB-пакетов не подключены. Запуск неподписанных приложений внутри Phoenix по модели LiveContainer также пока не реализован.
 
-            При добавлении источника сейчас сохраняется только его URL. IPA в этом выпуске не подписан и сам по себе не устанавливается на iPhone.
+            Файлы IPA в библиотеке хранятся внутри контейнера приложения и не устанавливаются в iOS. Сборка не подписана.
           files: PhoenixJB-0.00-beta-unsigned.ipa
           fail_on_unmatched_files: true
