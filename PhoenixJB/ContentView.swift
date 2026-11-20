@@ -145,7 +145,7 @@ struct ContentView: View {
                 Text("PHOENIX JB")
                     .font(.system(size: 27, weight: .black, design: .rounded))
                     .tracking(1.2)
-                Text("твой центр управления пакетами")
+                Text("бета-сборка · версия 0.00")
                     .font(.subheadline)
                     .foregroundStyle(.white.opacity(0.55))
             }
@@ -260,7 +260,7 @@ struct ContentView: View {
 
             Section("о приложении") {
                 LabeledContent("Название", value: "Phoenix JB")
-                LabeledContent("Версия", value: "1.0")
+                LabeledContent("Версия", value: "0.00 (бета)")
                 LabeledContent("iOS", value: UIDevice.current.systemVersion)
             }
 

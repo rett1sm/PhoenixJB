@@ -1,14 +1,16 @@
-name: Сборка Phoenix JB IPA
+name: Сборка Phoenix JB — бета
 
 on:
   workflow_dispatch:
   push:
     branches: [main]
-    tags:
-      - "v*"
 
 permissions:
   contents: write
+
+concurrency:
+  group: phoenix-jb-beta-release
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -17,7 +19,7 @@ jobs:
       - name: Получение исходного кода
         uses: actions/checkout@v4
 
-      - name: Сборка приложения
+      - name: Сборка бета-версии 0.00
         run: |
           xcodebuild \
             -project PhoenixJB.xcodeproj \
@@ -31,35 +33,52 @@ jobs:
           mkdir -p package/Payload
           cp -R build/Build/Products/Release-iphoneos/PhoenixJB.app package/Payload/
           cd package
-          zip -qry ../PhoenixJB-1.0-unsigned.ipa Payload
+          zip -qry ../PhoenixJB-0.00-beta-unsigned.ipa Payload
 
       - name: Сохранение IPA как артефакта сборки
         uses: actions/upload-artifact@v4
         with:
-          name: PhoenixJB-1.0-unsigned-IPA
-          path: PhoenixJB-1.0-unsigned.ipa
+          name: PhoenixJB-0.00-beta-IPA
+          path: PhoenixJB-0.00-beta-unsigned.ipa
           if-no-files-found: error
           retention-days: 30
 
-      - name: Публикация Phoenix JB 1.0 в Releases
-        if: github.event_name == 'workflow_dispatch' || github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/')
+      - name: Перевод предыдущего выпуска в архив
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view v1.0 >/dev/null 2>&1; then
+            gh release edit v1.0 \
+              --title "Архивная сборка — заменена бетой 0.00" \
+              --notes "Этот выпуск устарел и оставлен только для истории. Используй Phoenix JB 0.00 Beta: https://github.com/rett1sm/PhoenixJB/releases/tag/v0.00-beta" \
+              --prerelease
+          fi
+
+      - name: Публикация бета-релиза 0.00
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ startsWith(github.ref, 'refs/tags/') && github.ref_name || 'v1.0' }}
+          tag_name: v0.00-beta
           target_commitish: ${{ github.sha }}
-          name: Phoenix JB 1.0 — первый выпуск
+          name: Phoenix JB 0.00 — бета
+          prerelease: true
+          make_latest: false
           body: |
-            # Phoenix JB 1.0
+            # Phoenix JB 0.00 — бета
 
-            Первый публичный предварительный выпуск интерфейса Phoenix JB для iPhone.
+            Это тестовая сборка Phoenix JB. Возможны ошибки, неполная функциональность и изменения без сохранения совместимости.
 
-            ## Что входит
+            ## В этой бете
             - тёмный интерфейс на SwiftUI;
             - отображение модели устройства и версии iOS;
             - выбор предпочтительного менеджера пакетов: Sileo или Zebra;
             - локальный список источников и репозиториев.
 
-            ## Важно
-            Это IPA с интерфейсом, **а не джейлбрейк**. В сборке нет эксплойта, bootstrap, установщика Sileo/Zebra, механизма установки пакетов или совместимого с LiveContainer движка запуска неподписанных приложений. Адреса репозиториев пока только сохраняются на устройстве.
-          files: PhoenixJB-1.0-unsigned.ipa
+            ## Что пока не работает
+            - настоящий jailbreak и запуск эксплойта;
+            - установка Sileo, Zebra и DEB-пакетов;
+            - загрузка индексов репозиториев;
+            - запуск неподписанных IPA внутри Phoenix по модели LiveContainer.
+
+            При добавлении источника сейчас сохраняется только его URL. IPA в этом выпуске не подписан и сам по себе не устанавливается на iPhone.
+          files: PhoenixJB-0.00-beta-unsigned.ipa
           fail_on_unmatched_files: true
