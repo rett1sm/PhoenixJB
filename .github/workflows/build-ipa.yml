@@ -1,4 +1,4 @@
-name: Build Phoenix JB IPA
+name: Сборка Phoenix JB IPA
 
 on:
   workflow_dispatch:
@@ -14,10 +14,10 @@ jobs:
   build:
     runs-on: macos-26-intel
     steps:
-      - name: Checkout source
+      - name: Получение исходного кода
         uses: actions/checkout@v4
 
-      - name: Build app
+      - name: Сборка приложения
         run: |
           xcodebuild \
             -project PhoenixJB.xcodeproj \
@@ -33,7 +33,7 @@ jobs:
           cd package
           zip -qry ../PhoenixJB-1.0-unsigned.ipa Payload
 
-      - name: Upload workflow artifact
+      - name: Сохранение IPA как артефакта сборки
         uses: actions/upload-artifact@v4
         with:
           name: PhoenixJB-1.0-unsigned-IPA
@@ -41,25 +41,25 @@ jobs:
           if-no-files-found: error
           retention-days: 30
 
-      - name: Publish Phoenix JB 1.0 to Releases
+      - name: Публикация Phoenix JB 1.0 в Releases
         if: github.event_name == 'workflow_dispatch' || github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ startsWith(github.ref, 'refs/tags/') && github.ref_name || 'v1.0' }}
           target_commitish: ${{ github.sha }}
-          name: Phoenix JB 1.0
+          name: Phoenix JB 1.0 — первый выпуск
           body: |
             # Phoenix JB 1.0
 
-            Initial public preview release of the Phoenix JB iOS interface.
+            Первый публичный предварительный выпуск интерфейса Phoenix JB для iPhone.
 
-            ## Included
-            - SwiftUI dark interface
-            - device and iOS version display
-            - Sileo / Zebra preference selector
-            - local repository/source list
+            ## Что входит
+            - тёмный интерфейс на SwiftUI;
+            - отображение модели устройства и версии iOS;
+            - выбор предпочтительного менеджера пакетов: Sileo или Zebra;
+            - локальный список источников и репозиториев.
 
-            ## Important
-            This is an unsigned IPA preview, **not a jailbreak**. It does not contain an exploit, bootstrap, Sileo/Zebra installer, package installation backend, or a LiveContainer-compatible unsigned app runtime. Repository URLs are stored locally only.
+            ## Важно
+            Это IPA с интерфейсом, **а не джейлбрейк**. В сборке нет эксплойта, bootstrap, установщика Sileo/Zebra, механизма установки пакетов или совместимого с LiveContainer движка запуска неподписанных приложений. Адреса репозиториев пока только сохраняются на устройстве.
           files: PhoenixJB-1.0-unsigned.ipa
           fail_on_unmatched_files: true
