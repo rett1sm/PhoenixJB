@@ -1,18 +1,20 @@
 # Phoenix JB 1.0
 
-Phoenix JB is a SwiftUI preview app for managing jailbreak-related resources.
+Phoenix JB — предварительная версия приложения для iPhone с интерфейсом управления jailbreak-ресурсами.
 
-## Included in 1.0
-- Dark SwiftUI interface.
-- Device and iOS version display.
-- Sileo / Zebra preference selector.
-- Locally saved package-source list.
-- Unsigned IPA build through GitHub Actions.
+## Что входит в версию 1.0
+- тёмный интерфейс на SwiftUI;
+- отображение модели устройства и версии iOS;
+- выбор Sileo или Zebra в качестве предпочтительного менеджера пакетов;
+- локальный список источников и репозиториев;
+- сборка IPA через GitHub Actions на macOS.
 
-## Important limitations
-This release is **not a jailbreak** and does not contain an exploit, bootstrap, package installer, or an unsigned-app runtime such as LiveContainer. Adding a repository URL only saves the address; it does not fetch package indexes or install packages.
+## Важные ограничения
+Эта версия **не является джейлбрейком**. В ней нет эксплойта, цепочки загрузки, bootstrap, установщика Sileo/Zebra, механизма установки DEB-пакетов или собственного движка запуска неподписанных IPA, как у LiveContainer.
 
-The generated IPA is unsigned. A supported signing/installation method is still required to install it on a device.
+Добавление репозитория пока только сохраняет его URL на устройстве: индексы пакетов не загружаются, а пакеты и твики не устанавливаются.
 
-## Build
-GitHub Actions builds the app on macOS. Pushing a tag beginning with `v` (for example, `v1.0`) triggers a build and attaches the resulting IPA to the matching GitHub Release.
+Собираемый IPA не подписан. Для установки на iPhone понадобится совместимый способ подписи и установки.
+
+## Сборка
+GitHub Actions собирает приложение на macOS. Каждый push в `main` запускает сборку. Результат доступен во вкладке Actions, а workflow также обновляет выпуск `v1.0` во вкладке Releases и прикрепляет IPA.
