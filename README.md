@@ -1,17 +1,18 @@
-# Phoenix JB — SwiftUI preview
+# Phoenix JB 1.0
 
-Это исходный проект интерфейса Phoenix JB для iPhone.
+Phoenix JB is a SwiftUI preview app for managing jailbreak-related resources.
 
-## Что уже работает
-- тёмный интерфейс с вкладками «Главная», «Каталог», «Источники», «Настройки»;
-- выбор Sileo или Zebra с локальным сохранением выбора;
-- добавление и удаление URL-источников с локальным сохранением;
-- отображение версии iOS через системный API.
+## Included in 1.0
+- Dark SwiftUI interface.
+- Device and iOS version display.
+- Sileo / Zebra preference selector.
+- Locally saved package-source list.
+- Unsigned IPA build through GitHub Actions.
 
-## Что пока не реализовано
-- jailbreak exploit / boot chain / bootstrap;
-- установка Sileo или Zebra;
-- загрузка индексов репозиториев и установка deb-пакетов;
-- установка IPA из каталога.
+## Important limitations
+This release is **not a jailbreak** and does not contain an exploit, bootstrap, package installer, or an unsigned-app runtime such as LiveContainer. Adding a repository URL only saves the address; it does not fetch package indexes or install packages.
 
-Минимальная версия deployment target — iOS 16.
+The generated IPA is unsigned. A supported signing/installation method is still required to install it on a device.
+
+## Build
+GitHub Actions builds the app on macOS. Pushing a tag beginning with `v` (for example, `v1.0`) triggers a build and attaches the resulting IPA to the matching GitHub Release.
