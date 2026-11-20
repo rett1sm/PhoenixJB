@@ -104,7 +104,7 @@
 			}; name = Debug; };
 		A80000000000000000000004 /* Release target */ = {isa = XCBuildConfiguration; buildSettings = {
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "Phoenix JB";
+				INFOPLIST_KEY_CFBundleDisplayName = "Phoenix JB Beta";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MARKETING_VERSION = 0.00;
