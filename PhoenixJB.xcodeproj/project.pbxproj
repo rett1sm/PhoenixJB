@@ -43,7 +43,6 @@
 			children = (A20000000000000000000003 /* PhoenixJB.app */);
 			sourceTree = "<group>";
 		};
-/* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
 		A40000000000000000000001 /* PhoenixJB */ = {
@@ -65,10 +64,9 @@
 /* Begin PBXProject section */
 		A40000000000000000000002 /* Project object */ = {
 			isa = PBXProject;
-			attributes = { LastUpgradeCheck = 1600; TargetAttributes = { A40000000000000000000001 = { CreatedOnToolsVersion = 16.0; }; }; };
+			attributes = { LastUpgradeCheck = 1600; TargetAttributes = { A40000000000000000000001 = {CreatedOnToolsVersion = 16.0;};};};
 			buildConfigurationList = A70000000000000000000001 /* Build configuration list for PBXProject "PhoenixJB" */;
 			compatibilityVersion = "Xcode 14.0";
-			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (en, Base);
 			mainGroup = A30000000000000000000001;
@@ -94,6 +92,8 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "Phoenix JB";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MARKETING_VERSION = 1.0;
+				CURRENT_PROJECT_VERSION = 1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.romadev.PhoenixJB;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -107,6 +107,8 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "Phoenix JB";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MARKETING_VERSION = 1.0;
+				CURRENT_PROJECT_VERSION = 1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.romadev.PhoenixJB;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -119,8 +121,7 @@
 
 /* Begin XCConfigurationList section */
 		A70000000000000000000001 /* Build configuration list for PBXProject "PhoenixJB" */ = {isa = XCConfigurationList; buildConfigurations = (A80000000000000000000001 /* Debug project */, A80000000000000000000002 /* Release project */); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
-		A70000000000000000000002 /* Build configuration list for PBXNativeTarget "PhoenixJB" */ = {isa = XCConfigurationList; buildConfigurations = (A80000000000000000000003 /* Debug target */, A80000000000000000000004 /* Release target */); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
-/* End XCConfigurationList section */
-	};
+		A70000000000000000000002 /* Build configuration list for PBXProject "PhoenixJB" */ = {isa = XCConfigurationList; buildConfigurations = (A80000000000000000000003 /* Debug target */, A80000000000000000000004 /* Release target */); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+	}; 
 	rootObject = A40000000000000000000002 /* Project object */;
 }
