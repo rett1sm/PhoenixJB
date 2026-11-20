@@ -260,7 +260,7 @@ struct ContentView: View {
 
             Section("о приложении") {
                 LabeledContent("Название", value: "Phoenix JB")
-                LabeledContent("Версия", value: "0.1 preview")
+                LabeledContent("Версия", value: "1.0")
                 LabeledContent("iOS", value: UIDevice.current.systemVersion)
             }
 
